@@ -61,7 +61,7 @@ header {
 
 .hero-section {
   margin-top: 70px;
-  height: calc(90vh);
+  min-height: calc(90vh);
   max-height: 1300px;
   display: flex;
   align-items: center;
