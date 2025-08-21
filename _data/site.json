@@ -24,7 +24,7 @@
         "subline": "Break free from the frustration of inconsistent sensitivity across games",
         "problem": {
           "title": "😖 Why I Built This (The Problem)",
-          "description": "Every FPS game uses different sensitivity formulas.<br><br> A 0.5 sensitivity in Valorant feels completely different from 0.5 in Counter-Strike 2 (it's actually ~1.591).<br><br>Although I can typically fine-tune my sensitivity manually via in game sliders to feel \"pretty close\", it's never quite \"perfect.\""
+          "description": "Every FPS game uses different sensitivity formulas.<br><br> A 0.5 sensitivity in Valorant is different than 0.5 in Counter-Strike 2 (it's actually equivalent to ~1.591).<br><br>Although I can typically fine-tune my sensitivity manually via in game sliders to feel \"pretty close\", it's never quite \"perfect.\""
         },
         "solution": {
           "title": "🙌 The Solution",

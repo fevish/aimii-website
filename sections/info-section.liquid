@@ -1,5 +1,5 @@
 {% # - Info Section -# %}
-<section class="py-5">
+<section class="py-5 mx-auto info-section">
   <div class="container">
     <div class="row mb-5">
       <div class="col-lg-8 mx-auto text-center">
@@ -11,13 +11,13 @@
     {% # - Problem/Solution -# %}
     <div class="row mb-5 problem-solution-row">
       <div class="col-lg-6 mb-4">
-        <div class="p-4 border border-secondary border-opacity-25 rounded-3">
+        <div class="p-4 border border-secondary rounded-5 border-opacity-25">
           <h3 class="h5 mb-4">{{ site.pages.home.info.problem.title }}</h3>
           <div class="mb-0">{{ site.pages.home.info.problem.description }}</div>
         </div>
       </div>
       <div class="col-lg-6 mb-4">
-        <div class="p-4 border border-success border-opacity-25 rounded-3 solution-box">
+        <div class="p-4 border border-success border-opacity-25 rounded-5 solution-box">
           <h3 class="h5 mb-4 solution-title">{{ site.pages.home.info.solution.title }}</h3>
           <div class="d-flex flex-column gap-3">
             {% for step in site.pages.home.info.solution.steps %}

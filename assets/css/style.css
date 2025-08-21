@@ -29,14 +29,42 @@ body {
   color: var(--text-secondary);
 }
 
+@media (min-width: 1400px) {
+  .container {
+    width: 80%;
+    max-width: 2048px;
+  }
+}
+
+/* Header styling */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  background-color: var(--body-bg);
+
+  .btn {
+    border-radius: 0.7rem;
+  }
+}
+
 /* Hero image with gradient edges */
 .hero-image-container {
   overflow: hidden;
-  border-radius: 5rem;
+  border-radius: 3rem;
+
+  @media (min-width: 768px) {
+    border-radius: 5rem;
+  }
 }
 
 .hero-section {
-  margin: 10rem 0;
+  margin-top: 70px;
+  height: calc(90vh);
+  max-height: 1300px;
+  display: flex;
+  align-items: center;
 }
 
 .hero-section .subheading {
@@ -89,6 +117,10 @@ h3 {
   background-color: var(--discord-color);
   border-color: var(--discord-color);
   color: var(--dark);
+}
+
+.info-section {
+  max-width: 1400px;
 }
 
 /* Equal height problem/solution boxes */
@@ -165,13 +197,6 @@ h3 {
   background-color: var(--primary);
   border-color: var(--primary);
   color: var(--dark);
-}
-
-/* Header styling */
-header {
-  .btn {
-    border-radius: 0.7rem;
-  }
 }
 
 /* Simple button hover effect */
