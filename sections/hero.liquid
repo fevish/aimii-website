@@ -1,4 +1,4 @@
-<section class="py-5 my-5 hero-section">
+<section class="py-5 hero-section">
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-6 ps-5">
@@ -6,7 +6,10 @@
                 <h1 class="display-4 mb-4">{{ site.pages.home.hero.headline }}</h1>
                 <p class="lead mb-4">{{ site.pages.home.hero.description }}</p>
                 <div id="download" class="mt-5">
-                    <a href="{{ site.download_url }}" class="btn btn-primary btn-lg">{{ site.pages.home.hero.cta.text }}</a>
+                    <a href="{{ site.download_url }}" class="btn btn-primary btn-lg">
+                        {% include "icons.liquid", icon: "windows-logo" %}
+                        {{ site.pages.home.hero.cta.text }}
+                    </a>
                 </div>
             </div>
             <div class="col-lg-6">

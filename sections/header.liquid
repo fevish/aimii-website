@@ -2,14 +2,14 @@
     <div class="container">
         <div class="d-flex justify-content-between align-items-center">
             <h1 class="h4 m-0 brand-logo">{{ site.navigation.brand }}</h1>
-            <nav>
-                {% for link in site.navigation.links %}
-                    {% if link.type == "button" %}
-                        <a href="{{ site.download_url }}" class="btn btn-outline-primary">{{ link.text }}</a>
-                    {% else %}
-                        <a href="{{ link.url }}" class="nav-link">{{ link.text }}</a>
-                    {% endif %}
-                {% endfor %}
+            <nav class="d-flex gap-3">
+                <a href="{{ site.discord_url }}" class="btn btn-outline-secondary d-flex align-items-center">
+                    {% include "icons.liquid", icon: "discord-logo" %}
+                </a>
+                <a href="{{ site.download_url }}" class="btn btn-outline-primary d-flex align-items-center">
+                    {% include "icons.liquid", icon: "windows-logo" %}
+                    Download
+                </a>
             </nav>
         </div>
     </div>

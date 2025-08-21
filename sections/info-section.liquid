@@ -23,7 +23,7 @@
             {% for step in site.pages.home.info.solution.steps %}
               <div class="d-flex {% unless forloop.last %}mb-3{% endunless %}">
                 <div class="me-3">
-                  <span class="badge rounded-pill solution-badge">{{ step.number }}</span>
+                  <span class="solution-badge">{{ step.number }}</span>
                 </div>
                 <div>
                   <h6 class="mb-1">{{ step.title }}</h6>
