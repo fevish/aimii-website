@@ -1,5 +1,5 @@
 {
-  "title": "aimii.app",
+  "title": "Aim sensitivity normalizer - aimii.app",
   "description": "Consistent mouse sensitivity across all your games with automatic game detection and sensitivity conversion",
   "url": "https://aimii.app",
   "author": "aimii.app",
@@ -8,7 +8,6 @@
   "release_url": "https://github.com/fevish/aimii/releases/latest",
   "pages": {
     "home": {
-      "title": "Home",
       "hero": {
         "headline": "Consistent Aim,<br> Every game",
         "subheading": "Normalize your Aim Sensitivity",
