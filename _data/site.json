@@ -1,0 +1,29 @@
+{
+  "title": "aimii.app",
+  "description": "Normalize your mouse sensitivity across all your games with automatic game detection and sensitivity conversion",
+  "url": "https://aimii.app",
+  "author": "fevish",
+  "pages": {
+    "home": {
+      "title": "Home",
+      "hero": {
+        "headline": "Normalize your Aim",
+        "description": "Set your baseline mouse travel once, and aimii.app automatically converts it to the perfect sensitivity for any supported game.",
+        "cta": {
+          "text": "Download Now",
+          "url": "#"
+        }
+      }
+    }
+  },
+  "navigation": {
+    "brand": "aimii.app",
+    "links": [
+      {
+        "text": "Download",
+        "url": "#download",
+        "type": "button"
+      }
+    ]
+  }
+}
