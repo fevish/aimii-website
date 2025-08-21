@@ -1,4 +1,4 @@
-{%#- Cookie Consent Bar for GDPR Compliance (Non-North America only) -#%}
+{% # - Cookie Consent Bar for GDPR Compliance (Non-North America only) -# %}
 <div id="cookie-consent-bar" class="cookie-consent-bar" style="display: none;">
   <div class="container">
     <div class="row align-items-center">
@@ -6,20 +6,16 @@
         <div class="cookie-consent-content">
           <h6 class="mb-2">🍪 We use cookies</h6>
           <p class="mb-0 small">
-            We use cookies and similar technologies to improve your experience, analyze site traffic, and personalize content.
-            By continuing to browse our site, you consent to our use of cookies.
-            <a href="#" class="cookie-policy-link">Learn more about our cookie policy</a>
+            We use cookies and similar technologies to improve your experience, analyze site traffic, and personalize
+            content. By continuing to browse our site, you consent to our use of cookies.
+            <a href="/privacy-policy" class="cookie-policy-link">Learn more about our privacy policy</a>
           </p>
         </div>
       </div>
       <div class="col-lg-4 col-md-5">
         <div class="cookie-consent-actions d-flex gap-2 justify-content-end mt-3 mt-md-0">
-          <button type="button" class="btn btn-outline-light btn-sm" id="cookie-decline">
-            Decline
-          </button>
-          <button type="button" class="btn btn-primary btn-sm" id="cookie-accept">
-            Accept All
-          </button>
+          <button type="button" class="btn btn-outline-light btn-sm" id="cookie-decline">Decline</button>
+          <button type="button" class="btn btn-primary btn-sm" id="cookie-accept">Accept All</button>
         </div>
       </div>
     </div>
@@ -27,291 +23,287 @@
 </div>
 
 <script>
-(function() {
-  'use strict';
+  (function () {
+    'use strict';
 
-  // Check if consent has already been given
-  const CONSENT_KEY = 'cookie_consent_given';
-  const CONSENT_DECLINE_KEY = 'cookie_consent_declined';
-  const LOCATION_KEY = 'user_location_checked';
+    // Check if consent has already been given
+    const CONSENT_KEY = 'cookie_consent_given';
+    const CONSENT_DECLINE_KEY = 'cookie_consent_declined';
+    const LOCATION_KEY = 'user_location_checked';
 
-  // Test mode flag
-  let isTestMode = false;
+    // Test mode flag
+    let isTestMode = false;
 
     // Check for test country in URL parameters or localStorage
-  function getTestCountry() {
-    // Check URL parameter first: ?testCountry=DE
-    const urlParams = new URLSearchParams(window.location.search);
-    const urlTestCountry = urlParams.get('testCountry');
-    if (urlTestCountry) {
-      return urlTestCountry.toUpperCase();
+    function getTestCountry() {
+      // Check URL parameter first: ?testCountry=DE
+      const urlParams = new URLSearchParams(window.location.search);
+      const urlTestCountry = urlParams.get('testCountry');
+      if (urlTestCountry) {
+        return urlTestCountry.toUpperCase();
+      }
+
+      // Check localStorage: localStorage.setItem('testCountry', 'DE')
+      const storageTestCountry = localStorage.getItem('testCountry');
+      if (storageTestCountry) {
+        return storageTestCountry.toUpperCase();
+      }
+
+      return null;
     }
 
-    // Check localStorage: localStorage.setItem('testCountry', 'DE')
-    const storageTestCountry = localStorage.getItem('testCountry');
-    if (storageTestCountry) {
-      return storageTestCountry.toUpperCase();
+    // Check if we already have consent or location data (unless in test mode)
+    if (!isTestMode && (localStorage.getItem(CONSENT_KEY) || localStorage.getItem(CONSENT_DECLINE_KEY))) {
+      return; // User has already made a choice
     }
 
-    return null;
-  }
-
-  // Check if we already have consent or location data (unless in test mode)
-  if (!isTestMode && (localStorage.getItem(CONSENT_KEY) || localStorage.getItem(CONSENT_DECLINE_KEY))) {
-    return; // User has already made a choice
-  }
-
-  // Function to show consent bar
-  function showConsentBar() {
-    const consentBar = document.getElementById('cookie-consent-bar');
-    if (consentBar) {
-      consentBar.style.display = 'block';
-    }
-  }
-
-  // Function to hide consent bar
-  function hideConsentBar() {
-    const consentBar = document.getElementById('cookie-consent-bar');
-    if (consentBar) {
-      consentBar.style.display = 'none';
-    }
-  }
-
-      // Function to handle consent acceptance
-  function acceptCookies() {
-    localStorage.setItem(CONSENT_KEY, 'true');
-    localStorage.setItem('consent_date', new Date().toISOString());
-
-    // Update GTM consent
-    if (window.gtag) {
-      gtag('consent', 'update', {
-        'analytics_storage': 'granted',
-        'ad_storage': 'granted',
-        'ad_user_data': 'granted',
-        'ad_personalization': 'granted'
-      });
-    }
-
-    hideConsentBar();
-  }
-
-  // Function to handle consent decline
-  function declineCookies() {
-    localStorage.setItem(CONSENT_DECLINE_KEY, 'true');
-    localStorage.setItem('consent_date', new Date().toISOString());
-
-    // Update GTM consent to denied
-    if (window.gtag) {
-      gtag('consent', 'update', {
-        'analytics_storage': 'denied',
-        'ad_storage': 'denied',
-        'ad_user_data': 'denied',
-        'ad_personalization': 'denied'
-      });
-    }
-
-    hideConsentBar();
-  }
-
-      // Function to check if user is outside North America
-  function checkUserLocation() {
-    if (isTestMode) {
-      return;
-    }
-
-    // Check if we've already checked location recently (within 24 hours)
-    const lastCheck = localStorage.getItem(LOCATION_KEY);
-    if (lastCheck) {
-      const lastCheckTime = new Date(lastCheck);
-      const now = new Date();
-      const hoursDiff = (now - lastCheckTime) / (1000 * 60 * 60);
-
-      if (hoursDiff < 24) {
-        const shouldShow = localStorage.getItem('show_consent_bar') === 'true';
-        if (shouldShow) {
-          showConsentBar();
-        }
-        return;
+    // Function to show consent bar
+    function showConsentBar() {
+      const consentBar = document.getElementById('cookie-consent-bar');
+      if (consentBar) {
+        consentBar.style.display = 'block';
       }
     }
 
-    // Fetch user location from ipapi.co
-    fetch('https://ipapi.co/json/')
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-        }
-        return response.json();
-      })
-      .then(data => {
-        localStorage.setItem(LOCATION_KEY, new Date().toISOString());
-
-                if (data.country_code) {
-          // Check if user is outside North America
-          const northAmericaCountries = ['US', 'CA', 'MX', 'GT', 'BZ', 'SV', 'HN', 'NI', 'CR', 'PA'];
-          const isNorthAmerica = northAmericaCountries.includes(data.country_code);
-          const shouldShowBar = !isNorthAmerica;
-
-          localStorage.setItem('show_consent_bar', shouldShowBar.toString());
-
-          if (shouldShowBar) {
-            showConsentBar();
-          } else {
-            // Auto-grant consent for North American users
-            if (window.gtag) {
-              gtag('consent', 'update', {
-                'analytics_storage': 'granted',
-                'ad_storage': 'granted',
-                'ad_user_data': 'granted',
-                'ad_personalization': 'granted'
-              });
-            }
-          }
-        } else {
-          // If we can't determine location, err on the side of caution and show the bar
-          localStorage.setItem('show_consent_bar', 'true');
-          showConsentBar();
-        }
-      })
-      .catch(error => {
-        // If location check fails, show consent bar to be safe
-        localStorage.setItem('show_consent_bar', 'true');
-        showConsentBar();
-      });
-  }
-
-  // Set up event listeners when DOM is ready
-  function setupEventListeners() {
-    const acceptBtn = document.getElementById('cookie-accept');
-    const declineBtn = document.getElementById('cookie-decline');
-
-    if (acceptBtn) {
-      acceptBtn.addEventListener('click', acceptCookies);
+    // Function to hide consent bar
+    function hideConsentBar() {
+      const consentBar = document.getElementById('cookie-consent-bar');
+      if (consentBar) {
+        consentBar.style.display = 'none';
+      }
     }
 
-    if (declineBtn) {
-      declineBtn.addEventListener('click', declineCookies);
-    }
-  }
+    // Function to handle consent acceptance
+    function acceptCookies() {
+      localStorage.setItem(CONSENT_KEY, 'true');
+      localStorage.setItem('consent_date', new Date().toISOString());
 
-
-
-  // Initialize when DOM is loaded
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function() {
-      setupEventListeners();
-      initializeLocationCheck();
-    });
-  } else {
-    setupEventListeners();
-    initializeLocationCheck();
-  }
-
-  // Initialize location checking with test country support
-  function initializeLocationCheck() {
-    const testCountry = getTestCountry();
-
-    if (testCountry) {
-      isTestMode = true;
-      simulateCountry(testCountry);
-    } else {
-      checkUserLocation();
-    }
-  }
-
-  // Simulate a specific country
-  function simulateCountry(countryCode) {
-    // Clear existing data
-    localStorage.removeItem(CONSENT_KEY);
-    localStorage.removeItem(CONSENT_DECLINE_KEY);
-    localStorage.removeItem(LOCATION_KEY);
-    localStorage.removeItem('show_consent_bar');
-    localStorage.removeItem('consent_date');
-
-    // Check if simulated country is North America
-    const northAmericaCountries = ['US', 'CA', 'MX', 'GT', 'BZ', 'SV', 'HN', 'NI', 'CR', 'PA'];
-    const isNorthAmerica = northAmericaCountries.includes(countryCode);
-    const shouldShowBar = !isNorthAmerica;
-
-    // Show/hide the consent bar
-    if (shouldShowBar) {
-      showConsentBar();
-    } else {
-      hideConsentBar();
-      // Auto-grant consent for North American users
+      // Update GTM consent
       if (window.gtag) {
         gtag('consent', 'update', {
-          'analytics_storage': 'granted',
-          'ad_storage': 'granted',
-          'ad_user_data': 'granted',
-          'ad_personalization': 'granted'
+          analytics_storage: 'granted',
+          ad_storage: 'granted',
+          ad_user_data: 'granted',
+          ad_personalization: 'granted',
         });
       }
+
+      hideConsentBar();
     }
-  }
 
+    // Function to handle consent decline
+    function declineCookies() {
+      localStorage.setItem(CONSENT_DECLINE_KEY, 'true');
+      localStorage.setItem('consent_date', new Date().toISOString());
 
-})();
+      // Update GTM consent to denied
+      if (window.gtag) {
+        gtag('consent', 'update', {
+          analytics_storage: 'denied',
+          ad_storage: 'denied',
+          ad_user_data: 'denied',
+          ad_personalization: 'denied',
+        });
+      }
+
+      hideConsentBar();
+    }
+
+    // Function to check if user is outside North America
+    function checkUserLocation() {
+      if (isTestMode) {
+        return;
+      }
+
+      // Check if we've already checked location recently (within 24 hours)
+      const lastCheck = localStorage.getItem(LOCATION_KEY);
+      if (lastCheck) {
+        const lastCheckTime = new Date(lastCheck);
+        const now = new Date();
+        const hoursDiff = (now - lastCheckTime) / (1000 * 60 * 60);
+
+        if (hoursDiff < 24) {
+          const shouldShow = localStorage.getItem('show_consent_bar') === 'true';
+          if (shouldShow) {
+            showConsentBar();
+          }
+          return;
+        }
+      }
+
+      // Fetch user location from ipapi.co
+      fetch('https://ipapi.co/json/')
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          localStorage.setItem(LOCATION_KEY, new Date().toISOString());
+
+          if (data.country_code) {
+            // Check if user is outside North America
+            const safeCountries = ['US', 'CA', 'MX', 'AU', 'NZ', 'JP', 'KR', 'SG', 'HK'];
+            const isNorthAmerica = safeCountries.includes(data.country_code);
+            const shouldShowBar = !isNorthAmerica;
+
+            localStorage.setItem('show_consent_bar', shouldShowBar.toString());
+
+            if (shouldShowBar) {
+              showConsentBar();
+            } else {
+              // Auto-grant consent for North American users
+              if (window.gtag) {
+                gtag('consent', 'update', {
+                  analytics_storage: 'granted',
+                  ad_storage: 'granted',
+                  ad_user_data: 'granted',
+                  ad_personalization: 'granted',
+                });
+              }
+            }
+          } else {
+            // If we can't determine location, err on the side of caution and show the bar
+            localStorage.setItem('show_consent_bar', 'true');
+            showConsentBar();
+          }
+        })
+        .catch((error) => {
+          // If location check fails, show consent bar to be safe
+          localStorage.setItem('show_consent_bar', 'true');
+          showConsentBar();
+        });
+    }
+
+    // Set up event listeners when DOM is ready
+    function setupEventListeners() {
+      const acceptBtn = document.getElementById('cookie-accept');
+      const declineBtn = document.getElementById('cookie-decline');
+
+      if (acceptBtn) {
+        acceptBtn.addEventListener('click', acceptCookies);
+      }
+
+      if (declineBtn) {
+        declineBtn.addEventListener('click', declineCookies);
+      }
+    }
+
+    // Initialize when DOM is loaded
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', function () {
+        setupEventListeners();
+        initializeLocationCheck();
+      });
+    } else {
+      setupEventListeners();
+      initializeLocationCheck();
+    }
+
+    // Initialize location checking with test country support
+    function initializeLocationCheck() {
+      const testCountry = getTestCountry();
+
+      if (testCountry) {
+        isTestMode = true;
+        simulateCountry(testCountry);
+      } else {
+        checkUserLocation();
+      }
+    }
+
+    // Simulate a specific country
+    function simulateCountry(countryCode) {
+      // Clear existing data
+      localStorage.removeItem(CONSENT_KEY);
+      localStorage.removeItem(CONSENT_DECLINE_KEY);
+      localStorage.removeItem(LOCATION_KEY);
+      localStorage.removeItem('show_consent_bar');
+      localStorage.removeItem('consent_date');
+
+          // Check if simulated country is North America
+    const safeCountries = ['US', 'CA', 'MX', 'AU', 'NZ', 'JP', 'KR', 'SG', 'HK'];
+    const isNorthAmerica = safeCountries.includes(countryCode);
+      const shouldShowBar = !isNorthAmerica;
+
+      // Show/hide the consent bar
+      if (shouldShowBar) {
+        showConsentBar();
+      } else {
+        hideConsentBar();
+        // Auto-grant consent for North American users
+        if (window.gtag) {
+          gtag('consent', 'update', {
+            analytics_storage: 'granted',
+            ad_storage: 'granted',
+            ad_user_data: 'granted',
+            ad_personalization: 'granted',
+          });
+        }
+      }
+    }
+  })();
 </script>
 
 <style>
-.cookie-consent-bar {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: rgba(36, 37, 41, 0.98);
-  backdrop-filter: blur(10px);
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 1rem 0;
-  z-index: 9999;
-  animation: slideUp 0.3s ease-out;
-}
-
-@keyframes slideUp {
-  from {
-    transform: translateY(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-.cookie-consent-content h6 {
-  color: var(--primary);
-  font-weight: 600;
-}
-
-.cookie-consent-content p {
-  color: var(--text-secondary);
-  line-height: 1.4;
-}
-
-.cookie-policy-link {
-  color: var(--primary);
-  text-decoration: underline;
-}
-
-.cookie-policy-link:hover {
-  color: var(--primary);
-  opacity: 0.8;
-}
-
-.cookie-consent-actions .btn {
-  font-size: 0.875rem;
-  padding: 0.375rem 1rem;
-  white-space: nowrap;
-}
-
-@media (max-width: 768px) {
-  .cookie-consent-bar .container {
-    padding: 0 1rem;
+  .cookie-consent-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(36, 37, 41, 0.98);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1rem 0;
+    z-index: 9999;
+    animation: slideUp 0.3s ease-out;
   }
 
-  .cookie-consent-actions {
-    justify-content: center !important;
+  @keyframes slideUp {
+    from {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
   }
-}
+
+  .cookie-consent-content h6 {
+    color: var(--primary);
+    font-weight: 600;
+  }
+
+  .cookie-consent-content p {
+    color: var(--text-secondary);
+    line-height: 1.4;
+  }
+
+  .cookie-policy-link {
+    color: var(--primary);
+    text-decoration: underline;
+  }
+
+  .cookie-policy-link:hover {
+    color: var(--primary);
+    opacity: 0.8;
+  }
+
+  .cookie-consent-actions .btn {
+    font-size: 0.875rem;
+    padding: 0.375rem 1rem;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 768px) {
+    .cookie-consent-bar .container {
+      padding: 0 1rem;
+    }
+
+    .cookie-consent-actions {
+      justify-content: center !important;
+    }
+  }
 </style>

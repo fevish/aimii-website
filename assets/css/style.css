@@ -11,11 +11,16 @@
   --discord-color: var(--text-primary);
 }
 
+a, a:hover, a:focus {
+  color: var(--primary);
+}
+
 /* Dark mode base */
 body {
   font-family: 'Roboto Mono', monospace;
   background-color: var(--body-bg);
   color: var(--text-primary);
+  margin-top: 70px;
 }
 
 /* Typography */
@@ -38,6 +43,9 @@ body {
 
 /* Header styling */
 header {
+  h1 a {
+    text-decoration: none;
+  }
   position: fixed;
   top: 0;
   left: 0;
@@ -60,7 +68,6 @@ header {
 }
 
 .hero-section {
-  margin-top: 70px;
   min-height: calc(90vh);
   max-height: 1300px;
   display: flex;
