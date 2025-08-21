@@ -28,6 +28,79 @@ body {
     color: var(--text-secondary);
 }
 
+/* Hero image with gradient edges */
+.hero-image-container {
+    overflow: hidden;
+    border-radius: 5rem;
+}
+
+.hero-section .subheading {
+    font-size: 1.25rem;
+    color: var(--text-secondary);
+    span {
+      margin-left: -2.5rem;
+      margin-right: 1rem;
+    }
+}
+
+.hero-image-container img {
+    object-fit: contain;
+}
+
+/* Heading adjustments */
+h1, h2, h3, h4, h5, h6 {
+    font-feature-settings: "kern" 1;
+}
+
+h3 {
+    font-size: 1.75rem;
+}
+
+/* Brand styling */
+.brand-logo {
+    color: var(--primary);
+}
+
+/* Equal height problem/solution boxes */
+.problem-solution-row {
+    display: flex;
+}
+
+.problem-solution-row > .col-lg-6 {
+    display: flex;
+}
+
+.problem-solution-row .p-4 {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+/* Solution box styling */
+.solution-box {
+    border-color: var(--bs-success) !important;
+}
+
+.solution-title {
+    color: var(--primary);
+}
+
+.solution-badge {
+    background-color: var(--primary);
+    color: var(--dark);
+}
+
+/* Footer links */
+.footer-link {
+    color: var(--primary);
+    text-decoration: none;
+}
+
+.footer-link:hover {
+    color: var(--primary);
+    opacity: 0.8;
+}
+
 /* Primary color customization */
 .btn-primary {
     background-color: var(--primary);

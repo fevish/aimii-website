@@ -1,18 +1,56 @@
 {
   "title": "aimii.app",
-  "description": "Normalize your mouse sensitivity across all your games with automatic game detection and sensitivity conversion",
+  "description": "Consistent mouse sensitivity across all your games with automatic game detection and sensitivity conversion",
   "url": "https://aimii.app",
-  "author": "fevish",
+  "author": "aimii.app",
+  "download_url": "#",
+  "discord_url": "https://discord.gg/Nj2Xj3W4eY",
   "pages": {
     "home": {
       "title": "Home",
       "hero": {
-        "headline": "Normalize your Aim",
-        "description": "Set your baseline mouse travel once, and aimii.app automatically converts it to the perfect sensitivity for any supported game.",
+        "headline": "Consistent Aim,<br> Every game",
+        "subheading": "Normalize your Aim Sensitivity",
+        "description": "Set your baseline mouse travel once, and aimii.app automatically converts it to the perfect sensitivity across any supported game.",
+        "hero_image": "/assets/img/aimii-val-hero.png",
         "cta": {
           "text": "Download Now",
           "url": "#"
         }
+      },
+      "info": {
+        "headline": "// More time playing, less time tuning",
+        "subline": "Break free from the frustration of inconsistent sensitivity across games",
+        "problem": {
+          "title": "😖 Why I Built This (The Problem)",
+          "description": "Every FPS game uses different sensitivity formulas.<br><br> A 0.5 sensitivity in Valorant feels completely different from 0.5 in Counter-Strike 2 (it's actually ~1.591).<br><br>Although I can typically fine-tune my sensitivity manually via in game sliders to feel \"pretty close\", it's never quite \"perfect.\""
+        },
+        "solution": {
+          "title": "🙌 The Solution",
+          "steps": [
+            {
+              "number": "1",
+              "title": "Set Your Baseline",
+              "description": "Choose your preferred game, sensitivity, and mouse DPI once"
+            },
+            {
+              "number": "2",
+              "title": "Auto-Detection",
+              "description": "Launch any supported game and aimii will detect it"
+            },
+            {
+              "number": "3",
+              "title": "Game Sensitivity Conversion",
+              "description": "aimii will display the recommended sensitivity using game conversion formulas"
+            }
+          ]
+        },
+        "features": [
+          "Automatic game detection for supported FPS games",
+          "Manual calculator for any game comparison",
+          "Precise conversion formulas, not approximations",
+          "Lightweight and runs in the background"
+        ]
       }
     }
   },
@@ -25,5 +63,25 @@
         "type": "button"
       }
     ]
+  },
+  "footer": {
+    "tagline": "Vibe coded with ❤️ by @fevish",
+    "subtitle": "Solo dev, vibe coded project",
+    "links": [
+      {
+        "text": "Discord Community",
+        "url": "#",
+        "icon": "discord"
+      },
+      {
+        "text": "GitHub",
+        "url": "#",
+        "icon": "github"
+      }
+    ],
+    "cta": {
+      "text": "Join our Discord",
+      "description": "Let us know how it works for you, or just drop by to say hi!"
+    }
   }
 }

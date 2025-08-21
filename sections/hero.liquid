@@ -1,11 +1,19 @@
-<section class="py-5 my-5">
+<section class="py-5 my-5 hero-section">
     <div class="container">
-        <div class="row">
-            <div class="col-lg-6 col-md-8 mx-auto text-center">
+        <div class="row align-items-center">
+            <div class="col-lg-6 ps-5">
+                <p class="subheading display-4 mb-4"><span>//</span>{{ site.pages.home.hero.subheading }}</p>
                 <h1 class="display-4 mb-4">{{ site.pages.home.hero.headline }}</h1>
                 <p class="lead mb-4">{{ site.pages.home.hero.description }}</p>
-                <div id="download">
-                    <a href="{{ site.pages.home.hero.cta.url }}" class="btn btn-primary btn-lg">{{ site.pages.home.hero.cta.text }}</a>
+                <div id="download" class="mt-5">
+                    <a href="{{ site.download_url }}" class="btn btn-primary btn-lg">{{ site.pages.home.hero.cta.text }}</a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="text-center">
+                    <div class="hero-image-container">
+                        <img src="{{ site.pages.home.hero.hero_image }}" alt="aimii.app screenshot" class="img-fluid h-100 w-100">
+                    </div>
                 </div>
             </div>
         </div>
