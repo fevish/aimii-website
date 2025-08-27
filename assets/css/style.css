@@ -131,6 +131,9 @@ h3 {
 
 .info-section {
   max-width: 1600px;
+  small {
+    color: var(--text-secondary);
+  }
 }
 
 /* Equal height problem/solution boxes */
@@ -172,6 +175,9 @@ h3 {
 }
 
 /* Footer links */
+footer {
+  color: var(--text-secondary);
+}
 .footer-link {
   color: var(--primary);
   text-decoration: none;
