@@ -56,6 +56,9 @@ module.exports = function (eleventyConfig) {
 	eleventyConfig.addPassthroughCopy('assets');
 	eleventyConfig.addWatchTarget('_site/assets/*.css');
 
+	// Copy riot.txt for verification
+	eleventyConfig.addPassthroughCopy('riot.txt');
+
 	eleventyConfig.setBrowserSyncConfig({
 		files: ['_site/assets/css/*.css'],
 	});
