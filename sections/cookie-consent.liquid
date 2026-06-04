@@ -1,4 +1,4 @@
-{% # - Cookie Consent Bar for GDPR Compliance (Non-North America only) -# %}
+{% # - Cookie Consent Bar for GDPR/UK Compliance (shown to EU/EEA + UK only) -# %}
 <div id="cookie-consent-bar" class="cookie-consent-bar" style="display: none;">
   <div class="container">
     <div class="row align-items-center">
@@ -30,6 +30,10 @@
     const CONSENT_KEY = 'cookie_consent_given';
     const CONSENT_DECLINE_KEY = 'cookie_consent_declined';
     const LOCATION_KEY = 'user_location_checked';
+
+    // Countries where prior opt-in consent is legally required before setting
+    // analytics/advertising cookies (EU/EEA + UK). Everyone else is opt-out.
+    const CONSENT_REQUIRED_COUNTRIES = ['AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'GR', 'HU', 'IE', 'IT', 'LV', 'LT', 'LU', 'MT', 'NL', 'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SE', 'IS', 'LI', 'NO', 'GB'];
 
     // Test mode flag
     let isTestMode = false;
@@ -109,7 +113,7 @@
       hideConsentBar();
     }
 
-    // Function to check if user is outside North America
+    // Function to check the visitor's country and gate consent accordingly
     function checkUserLocation() {
       if (isTestMode) {
         return;
@@ -143,17 +147,15 @@
           localStorage.setItem(LOCATION_KEY, new Date().toISOString());
 
           if (data.country_code) {
-            // Check if user is outside North America
-            const safeCountries = ['US', 'CA', 'MX', 'AU', 'NZ', 'JP', 'KR', 'SG', 'HK'];
-            const isNorthAmerica = safeCountries.includes(data.country_code);
-            const shouldShowBar = !isNorthAmerica;
+            // Only EU/EEA + UK visitors are prompted; everyone else is opt-out.
+            const shouldShowBar = CONSENT_REQUIRED_COUNTRIES.includes(data.country_code);
 
             localStorage.setItem('show_consent_bar', shouldShowBar.toString());
 
             if (shouldShowBar) {
               showConsentBar();
             } else {
-              // Auto-grant consent for North American users
+              // Auto-grant consent for visitors outside the EU/EEA + UK
               if (window.gtag) {
                 gtag('consent', 'update', {
                   analytics_storage: 'granted',
@@ -222,17 +224,15 @@
       localStorage.removeItem('show_consent_bar');
       localStorage.removeItem('consent_date');
 
-          // Check if simulated country is North America
-    const safeCountries = ['US', 'CA', 'MX', 'AU', 'NZ', 'JP', 'KR', 'SG', 'HK'];
-    const isNorthAmerica = safeCountries.includes(countryCode);
-      const shouldShowBar = !isNorthAmerica;
+      // Only EU/EEA + UK visitors are prompted; everyone else is opt-out.
+      const shouldShowBar = CONSENT_REQUIRED_COUNTRIES.includes(countryCode);
 
       // Show/hide the consent bar
       if (shouldShowBar) {
         showConsentBar();
       } else {
         hideConsentBar();
-        // Auto-grant consent for North American users
+        // Auto-grant consent for visitors outside the EU/EEA + UK
         if (window.gtag) {
           gtag('consent', 'update', {
             analytics_storage: 'granted',
